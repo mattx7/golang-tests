@@ -56,8 +56,8 @@ func Announce(message string, delay time.Duration) {
 	}() // Note the parentheses - must call the function.
 }
 
-func mainOld() {
-	Announce("my message", 0)
+func GoroutineExample() {
+	Announce("my message from the goroutine", 0)
 	// In Go, function literals are closures: the implementation makes sure the variables
 	// referred to by the function survive as long as they are active.
 	//
@@ -91,10 +91,14 @@ func sumWithChan(s []int, c chan int) {
 }
 
 func SimpleChannelExample() {
+	fmt.Println("=== Simple Channel Example ===")
+
 	s := []int{7, 2, 8, -9, 4, 0}
 	c := make(chan int)
+
 	go sumWithChan(s[:len(s)/2], c)
 	go sumWithChan(s[len(s)/2:], c)
+
 	x, y := <-c, <-c
 	// receive from c
 	fmt.Println(x, y, x+y)
@@ -132,22 +136,26 @@ func Serve(clientRequests chan *Request, quit chan bool) {
 }
 
 func MultiChannelExample() {
+	fmt.Println("=== Multi Channel Example ===")
 	request := &Request{[]int{3, 4, 5}, sum, make(chan int)}
 	request2 := &Request{[]int{1, -9}, sum, make(chan int)}
-	// Send request
+
 	clientRequest := make(chan *Request)
-	clientRequest2 := make(chan *Request)
+
 	go Serve(clientRequest, make(chan bool))
-	go Serve(clientRequest2, make(chan bool))
+
+	// Send request
 	clientRequest <- request
-	clientRequest2 <- request2
+	clientRequest <- request2
+
 	// Wait for response.
-	fmt.Printf("answer: %d\n", <-request.resultChan)
-	fmt.Printf("answer: %d\n", <-request2.resultChan)
+	fmt.Printf("1. answer: %d\n", <-request.resultChan)
+	fmt.Printf("2. answer: %d\n", <-request2.resultChan)
 }
 
 // --- MAIN
 func main() {
+	GoroutineExample()
 	SimpleChannelExample()
 	MultiChannelExample()
 }
