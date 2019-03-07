@@ -1,9 +1,11 @@
 /*
 Constants in Go are just that—constant. T
-hey are created at compile time, even when defined as locals in functions, and can only be numbers, characters (runes),
-strings or booleans. Because of the compile-time restriction, the expressions that define them must be constant
-expressions, evaluatable by the compiler. For instance, 1<<3 is a constant expression, while math.Sin(math.Pi/4) is
-not because the function call to math.Sin needs to happen at run time.
+hey are created at compile time, even when defined as locals in functions,
+and can only be numbers, characters (runes), strings or booleans. Because
+of the compile-time restriction, the expressions that define them must be
+constant expressions, evaluatable by the compiler. For instance, 1<<3 is
+a constant expression, while math.Sin(math.Pi/4) isnot because the function
+call to math.Sin needs to happen at run time.
 */
 package main
 
@@ -39,7 +41,8 @@ const (
 // does not work!
 //const PI4 = math.Sin(math.Pi/4)
 
-// Variables can be initialized just like constants but the initializer can be a general expression computed at run time.
+// Variables can be initialized just like constants but the initializer
+// can be a general expression computed at run time.
 var (
 	home   = os.Getenv("HOME")
 	user   = os.Getenv("USER")

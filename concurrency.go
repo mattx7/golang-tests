@@ -80,7 +80,7 @@ Unbuffered channels combine communication—the exchange of a value—with synch
 that two calculations (goroutines) are in a known state.
 */
 
-// --- EASY CHANNEL EXAMPLE
+// --- SIMPLE CHANNEL EXAMPLE
 
 func sumWithChan(s []int, c chan int) {
 	sum := 0
@@ -90,7 +90,7 @@ func sumWithChan(s []int, c chan int) {
 	c <- sum // send sum to c
 }
 
-func EasyChannelExample() {
+func SimpleChannelExample() {
 	s := []int{7, 2, 8, -9, 4, 0}
 	c := make(chan int)
 	go sumWithChan(s[:len(s)/2], c)
@@ -103,9 +103,9 @@ func EasyChannelExample() {
 // --- MULTI CHANNEL EXAMPLE
 
 type Request struct {
-	args        []int
-	f           func([]int) int
-	resultChan  chan int
+	args       []int
+	f          func([]int) int
+	resultChan chan int
 }
 
 var MaxOutstanding = 5
@@ -128,26 +128,26 @@ func Serve(clientRequests chan *Request, quit chan bool) {
 	for i := 0; i < MaxOutstanding; i++ {
 		go handle(clientRequests)
 	}
-	<-quit  // Wait to be told to exit.
+	<-quit // Wait to be told to exit.
 }
 
 func MultiChannelExample() {
 	request := &Request{[]int{3, 4, 5}, sum, make(chan int)}
+	request2 := &Request{[]int{1, -9}, sum, make(chan int)}
 	// Send request
-	var clientRequest chan *Request
+	clientRequest := make(chan *Request)
+	clientRequest2 := make(chan *Request)
+	go Serve(clientRequest, make(chan bool))
+	go Serve(clientRequest2, make(chan bool))
 	clientRequest <- request
-	//Serve(clientRequest, )
+	clientRequest2 <- request2
 	// Wait for response.
 	fmt.Printf("answer: %d\n", <-request.resultChan)
+	fmt.Printf("answer: %d\n", <-request2.resultChan)
 }
 
 // --- MAIN
 func main() {
-	EasyChannelExample()
+	SimpleChannelExample()
 	MultiChannelExample()
 }
-
-
-
-
-
