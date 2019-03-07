@@ -57,7 +57,7 @@ func Announce(message string, delay time.Duration) {
 }
 
 func GoroutineExample() {
-	Announce("my message from the goroutine", 0)
+	Announce("my message from the goroutine", 0) // TODO why does this occur in the stdout without channel?
 	// In Go, function literals are closures: the implementation makes sure the variables
 	// referred to by the function survive as long as they are active.
 	//
@@ -122,7 +122,7 @@ func sum(a []int) (s int) {
 }
 
 func handle(queue chan *Request) {
-	for req := range queue {
+	for req := range queue { // TODO seems to unwrap the chan obj
 		req.resultChan <- req.f(req.args)
 	}
 }
@@ -132,7 +132,7 @@ func Serve(clientRequests chan *Request, quit chan bool) {
 	for i := 0; i < MaxOutstanding; i++ {
 		go handle(clientRequests)
 	}
-	<-quit // Wait to be told to exit.
+	<-quit // Wait to be told to exit. TODO when does this happen
 }
 
 func MultiChannelExample() {
