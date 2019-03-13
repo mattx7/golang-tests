@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 )
+
 type T struct {
 	a int
 	b float64
@@ -36,7 +37,6 @@ func main() {
 	var x uint64 = 1<<64 - 1
 	fmt.Printf("%d %x; %d %x\n", x, x, int64(x), int64(x))
 
-
 	fmt.Printf("\n==> Print map:\n")
 	timeZone := map[string]int{
 		"UTC": 0 * 60 * 60,
@@ -47,10 +47,9 @@ func main() {
 	}
 	fmt.Printf("%v\n", timeZone) // or just fmt.Println(timeZone)
 
-
 	fmt.Printf("\n==> Print structs:\n")
 
-	t := &T{ 7, -2.35, "abctdef" }
+	t := &T{7, -2.35, "abctdef"}
 	fmt.Printf("%v\n", t)
 	fmt.Printf("%+v\n", t)
 	fmt.Printf("%#v\n", t)

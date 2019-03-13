@@ -28,7 +28,6 @@ type ReadWriter interface {
 	Writer
 }
 
-
 // ### The same basic idea applies to structs, but with more far-reaching implications.
 
 // ReadWriter stores pointers to a Reader and a Writer.
@@ -36,7 +35,7 @@ type ReadWriter interface {
 // must be initialized to point to valid structs before they can be used.
 // The ReadWriter struct could be written as
 type BufioReadWriter struct {
-	*bufio.Reader  // dont provide field names to embed struct and avoid redefining the methods todo check that
+	*bufio.Reader // dont provide field names to embed struct and avoid redefining the methods todo check that
 	*bufio.Writer
 }
 
@@ -52,7 +51,7 @@ func (job *Job) Printf(format string, args ...interface{}) {
 func main() {
 	job := &Job{"RUN_THINGS", log.New(os.Stderr, "Job: ", log.Ldate)}
 	job.Println("starting now...")
-	job.Printf("%#v",job)
+	job.Printf("%#v", job)
 }
 
 /*

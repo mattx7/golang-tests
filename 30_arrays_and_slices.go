@@ -1,4 +1,3 @@
-
 /*
 There are major differences between the ways ARRAYS work in Go and C. In Go,
 - Arrays are values. Assigning one array to another COPIES all the elements.
@@ -49,7 +48,7 @@ func main() {
 	fmt.Println("\n==> basic slices")
 	basicSlice := []byte{0, 1} // this is a slice and not an array
 	// func make([]T, len, cap) []T
-	basicSlice = make([]byte,2 ,2)
+	basicSlice = make([]byte, 2, 2)
 	basicSlice[0] = 0
 	basicSlice[1] = 1
 	bytes := customAppend(basicSlice, []byte{254, 255}) // 255 max because byte/uint8
@@ -61,11 +60,10 @@ func main() {
 	fmt.Println(y)
 	fmt.Printf("x:%p \ny:%p\n", &x, &y)
 
-	x = []int{1,2,3}
-	y = []int{4,5,6}
+	x = []int{1, 2, 3}
+	y = []int{4, 5, 6}
 	x = append(x, y...) // "..." unwraps a slice or something like that
 	fmt.Println(x)
-
 
 	fmt.Println("\n==> Two-dimensional slices")
 	text := LinesOfText{
